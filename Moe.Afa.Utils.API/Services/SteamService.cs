@@ -57,4 +57,10 @@ public class SteamService : ISteamService
 
         return steamGames;
     }
+
+    public async Task<ulong> GetSteamIdByNicknameAsync(string nickname)
+    {
+        var url = $"http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_steamKey}&vanityurl={nickname}";
+        throw new NotImplementedException();
+    }
 }
