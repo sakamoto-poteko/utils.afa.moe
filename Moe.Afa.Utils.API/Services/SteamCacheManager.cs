@@ -18,12 +18,12 @@ public class SteamCacheManager : ISteamCacheManager
         SetCacheEntry(nickname, userId, _userIdCache, expireInMinutes);
     }
 
-    public StoreGameData? GetStoreGameData(ulong appId)
+    public StoreGameData GetStoreGameData(ulong appId)
     {
         return GetCacheItem(appId, _storeGameDataCache);
     }
 
-    public ulong? GetUserId(string nickname)
+    public ulong GetUserId(string nickname)
     {
         return GetCacheItem(nickname, _userIdCache);
     }
@@ -34,15 +34,15 @@ public class SteamCacheManager : ISteamCacheManager
         cache[key] = new CacheEntry<TV>(value, expiry);
     }
 
-    private TV? GetCacheItem<TK, TV>(TK key, IDictionary<TK, CacheEntry<TV>> cache)
+    private TV GetCacheItem<TK, TV>(TK key, IDictionary<TK, CacheEntry<TV>> cache)
     {
         if (cache.TryGetValue(key, out var value))
         {
-            return DateTime.UtcNow > value.Expiry ? default : value.Value;
+            return DateTime.UtcNow > value.Expiry ? throw new KeyNotFoundException(): value.Value;
         }
         else
         {
-            return default;
+            throw new KeyNotFoundException();
         }
     }
 

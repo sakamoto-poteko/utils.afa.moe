@@ -8,5 +8,5 @@ public class VanityUrlResponse
     public ulong SteamId { get; set; }
 
     [JsonPropertyName("success")]
-    public bool Success { get; set; }
+    public int Success { get; set; }
 }

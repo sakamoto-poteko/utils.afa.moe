@@ -8,7 +8,7 @@ public interface ISteamCacheManager
 
     public void SetUserId(string nickname, ulong userId, uint? expireInMinutes);
 
-    public StoreGameData? GetStoreGameData(ulong appId);
+    public StoreGameData GetStoreGameData(ulong appId);
 
-    public ulong? GetUserId(string nickname);
+    public ulong GetUserId(string nickname);
 }

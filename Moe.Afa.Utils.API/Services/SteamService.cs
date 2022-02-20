@@ -8,11 +8,13 @@ namespace Moe.Afa.Utils.API.Services;
 public class SteamService : ISteamService
 {
     private readonly HttpClient _httpClient;
-    private readonly SteamCacheManager _steamCacheManager;
+    private readonly ISteamCacheManager _steamCacheManager;
     private readonly ILogger<SteamService> _logger;
     private readonly string _steamKey;
 
-    public SteamService(HttpClient httpClient, IOptions<SteamSettings> steamSettings, SteamCacheManager steamCacheManager, ILogger<SteamService> logger)
+    public SteamService(
+        HttpClient httpClient, IOptions<SteamSettings> steamSettings, ISteamCacheManager steamCacheManager,
+        ILogger<SteamService> logger)
     {
         _httpClient = httpClient;
         _steamCacheManager = steamCacheManager;
@@ -37,9 +39,13 @@ public class SteamService : ISteamService
 
         foreach (var gameId in gameIds)
         {
-            StoreGameData? cachedData = _steamCacheManager.GetStoreGameData(gameId);
+            StoreGameData cachedData;
 
-            if (cachedData == null)
+            try
+            {
+                cachedData = _steamCacheManager.GetStoreGameData(gameId);
+            }
+            catch (KeyNotFoundException)
             {
                 var response = await _httpClient.GetAsync($"https://store.steampowered.com/api/appdetails?appids={gameId}");
                 response.EnsureSuccessStatusCode();
@@ -50,7 +56,7 @@ public class SteamService : ISteamService
                 cachedData = data;
                 _steamCacheManager.SetStoreGameData(gameId, data, 30 * 24 * 60);
             }
-            
+
             steamGames.Add(new()
             {
                 SteamAppId = cachedData.SteamAppId,
@@ -69,18 +75,24 @@ public class SteamService : ISteamService
 
     public async Task<ulong> GetSteamIdByNicknameAsync(string nickname)
     {
-        ulong? userId = _steamCacheManager.GetUserId(nickname);
-        if (userId == null)
+        ulong userId;
+        try
         {
-            var response = await _httpClient.GetAsync($"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_steamKey}&vanityurl={nickname}");
+            userId = _steamCacheManager.GetUserId(nickname);
+        }
+        catch (KeyNotFoundException e)
+        {
+            var response = await _httpClient.GetAsync(
+                $"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_steamKey}&vanityurl={nickname}");
+
             response.EnsureSuccessStatusCode();
-            
+
             var vanityUrl = await response.Content.ReadFromJsonAsync<SteamApiResponse<VanityUrlResponse>>();
 
             userId = vanityUrl.Response.SteamId;
-            _steamCacheManager.SetUserId(nickname, userId.Value, 30 * 24 * 60);
+            _steamCacheManager.SetUserId(nickname, userId, 30 * 24 * 60);
         }
 
-        return userId.Value;
+        return userId;
     }
 }
