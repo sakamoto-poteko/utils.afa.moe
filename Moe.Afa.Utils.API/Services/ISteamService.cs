@@ -8,4 +8,6 @@ public interface ISteamService
     public Task<IList<OwnedGame>> GetOwnedGamesAsync(ulong userId);
     
     public Task<IList<SteamGameModel>> GetGameDetailsAsync(IList<ulong> gameIds);
+
+    public Task<ulong> GetSteamIdByNicknameAsync(string nickname);
 }

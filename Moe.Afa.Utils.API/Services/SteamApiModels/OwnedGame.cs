@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿#pragma warning disable CS8618
+
+using System.Text.Json.Serialization;
 
 namespace Moe.Afa.Utils.API.Services.SteamApiModels;
 
@@ -22,17 +24,11 @@ public class OwnedGame
 
 public class OwnedGamesResponse
 {
-    [JsonPropertyName("response")]
-    public OwnedGamesResponseBody Response { get; set; }
-    
-    public class OwnedGamesResponseBody
-    {
-        [JsonPropertyName("game_count")]
-        public ulong GameCount { get; set; }
+    [JsonPropertyName("game_count")]
+    public ulong GameCount { get; set; }
 
-        [JsonPropertyName("games")]
-        public IList<OwnedGame> Games { get; set; }
-    }
+    [JsonPropertyName("games")]
+    public IList<OwnedGame> Games { get; set; }
 }
 
 public class OwnedGameAppIdComparer : IEqualityComparer<OwnedGame>

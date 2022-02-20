@@ -1,4 +1,5 @@
-﻿namespace Moe.Afa.Utils.Common.Models;
+﻿#pragma warning disable CS8618
+namespace Moe.Afa.Utils.Common.Models;
 
 public class SteamGameModel
 {
