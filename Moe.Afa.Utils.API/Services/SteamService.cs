@@ -80,7 +80,7 @@ public class SteamService : ISteamService
         {
             userId = _steamCacheManager.GetUserId(nickname);
         }
-        catch (KeyNotFoundException e)
+        catch (KeyNotFoundException)
         {
             var response = await _httpClient.GetAsync(
                 $"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_steamKey}&vanityurl={nickname}");

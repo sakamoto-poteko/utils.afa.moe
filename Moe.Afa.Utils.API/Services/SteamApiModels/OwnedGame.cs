@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿#pragma warning disable CS8618
+
+using System.Text.Json.Serialization;
 
 namespace Moe.Afa.Utils.API.Services.SteamApiModels;
 
