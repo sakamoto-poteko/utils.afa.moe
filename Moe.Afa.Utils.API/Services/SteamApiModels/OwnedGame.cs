@@ -22,17 +22,11 @@ public class OwnedGame
 
 public class OwnedGamesResponse
 {
-    [JsonPropertyName("response")]
-    public OwnedGamesResponseBody Response { get; set; }
-    
-    public class OwnedGamesResponseBody
-    {
-        [JsonPropertyName("game_count")]
-        public ulong GameCount { get; set; }
+    [JsonPropertyName("game_count")]
+    public ulong GameCount { get; set; }
 
-        [JsonPropertyName("games")]
-        public IList<OwnedGame> Games { get; set; }
-    }
+    [JsonPropertyName("games")]
+    public IList<OwnedGame> Games { get; set; }
 }
 
 public class OwnedGameAppIdComparer : IEqualityComparer<OwnedGame>

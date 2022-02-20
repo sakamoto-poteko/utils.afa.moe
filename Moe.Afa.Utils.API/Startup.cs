@@ -23,6 +23,7 @@ public class Startup
         services.AddHttpClient();
         
         services.AddTransient<ISteamService, SteamService>();
+        services.AddSingleton<ISteamCacheManager, SteamCacheManager>();
 
         services.Configure<SteamSettings>(Configuration.GetSection("Steam"));
     }
