@@ -21,7 +21,7 @@ public class Startup
         services.AddSwaggerGen();
 
         services.AddHttpClient();
-        
+
         services.AddTransient<ISteamService, SteamService>();
         services.AddSingleton<ISteamCacheManager, SteamCacheManager>();
 
@@ -36,6 +36,10 @@ public class Startup
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
+        }
+        else
+        {
+            app.UseSwagger();
         }
 
         app.UseHttpsRedirection();
