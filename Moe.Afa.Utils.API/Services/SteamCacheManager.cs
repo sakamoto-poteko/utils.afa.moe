@@ -31,6 +31,12 @@ public class SteamCacheManager : ISteamCacheManager
     private void SetCacheEntry<TK, TV>(TK key, TV value, IDictionary<TK, CacheEntry<TV>> cache, uint? expireInMinutes)
     {
         var expiry = expireInMinutes == null ? DateTime.MaxValue : DateTime.UtcNow.AddMinutes(expireInMinutes.Value);
+
+        if (value == null)
+        {
+            throw new ArgumentNullException(nameof(value));
+        }
+        
         cache[key] = new CacheEntry<TV>(value, expiry);
     }
 

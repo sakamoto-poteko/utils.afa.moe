@@ -52,9 +52,17 @@ public class SteamService : ISteamService
 
                 var games = await response.Content.ReadFromJsonAsync<IDictionary<ulong, StoreGame>>();
 
-                var data = games.Single().Value.Data;
-                cachedData = data;
-                _steamCacheManager.SetStoreGameData(gameId, data, 30 * 24 * 60);
+                var game = games.Single().Value;
+                if (!game.Success)
+                {
+                    game.Data = new()
+                    {
+                        Name = "[Retired]", 
+                    };
+                }
+
+                cachedData = game.Data;
+                _steamCacheManager.SetStoreGameData(gameId, cachedData, 30 * 24 * 60);
             }
 
             steamGames.Add(new()
