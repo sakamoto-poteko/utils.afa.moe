@@ -23,9 +23,12 @@ public class Startup
         services.AddHttpClient();
 
         services.AddTransient<ISteamService, SteamService>();
+        services.AddTransient<IPlocnPhoneNumberLookupService, PlocnPhoneNumberLookupService>();
+        
         services.AddSingleton<ISteamCacheManager, SteamCacheManager>();
 
         services.Configure<SteamSettings>(Configuration.GetSection("Steam"));
+        services.Configure<CidLookupSettings>(Configuration.GetSection("CidLookup"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
