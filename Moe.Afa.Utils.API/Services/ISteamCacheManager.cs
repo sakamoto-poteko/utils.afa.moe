@@ -1,4 +1,4 @@
-﻿using Moe.Afa.Utils.API.Services.SteamApiModels;
+﻿using Moe.Afa.Utils.API.Services.Models.Steam;
 
 namespace Moe.Afa.Utils.API.Services;
 

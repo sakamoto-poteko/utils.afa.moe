@@ -1,7 +1,7 @@
 ﻿#pragma warning disable CS8618
 using System.Text.Json.Serialization;
 
-namespace Moe.Afa.Utils.API.Services.SteamApiModels;
+namespace Moe.Afa.Utils.API.Services.Models.Steam;
 
 public class StoreGame
 {
