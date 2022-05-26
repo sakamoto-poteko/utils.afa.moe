@@ -24,10 +24,10 @@ public class CallerIdLookupController : ControllerBase
             {
                 // Cellphone in China
                 var result = await _plocnPhoneNumberLookupService.GetPhoneNumberInfoAsync(number);
-                return $"{result.City}({result.Province}){result.Company}";
+                return Ok($"{result.City}({result.Province}){result.Company}");
             }
         }
 
-        return "Unknown";
+        return Ok("Unknown");
     }
 }
