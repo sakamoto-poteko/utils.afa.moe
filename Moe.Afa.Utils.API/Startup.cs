@@ -23,7 +23,7 @@ public class Startup
         services.AddHttpClient();
 
         services.AddTransient<ISteamService, SteamService>();
-        services.AddTransient<IPlocnPhoneNumberLookupService, PlocnPhoneNumberLookupService>();
+        services.AddTransient<IChinaCellphoneNumberLookupService, PlocnPhoneNumberLookupService>();
         
         services.AddSingleton<ISteamCacheManager, SteamCacheManager>();
 

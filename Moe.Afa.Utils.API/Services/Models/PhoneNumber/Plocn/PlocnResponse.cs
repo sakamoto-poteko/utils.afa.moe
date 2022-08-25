@@ -1,4 +1,4 @@
-namespace Moe.Afa.Utils.API.Services.Models.Plocn;
+namespace Moe.Afa.Utils.API.Services.Models.PhoneNumber.Plocn;
 
 public class PlocnResponse
 {

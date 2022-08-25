@@ -1,8 +1,8 @@
-using Moe.Afa.Utils.API.Services.Models.Plocn;
+using Moe.Afa.Utils.API.Services.Models.PhoneNumber;
 
 namespace Moe.Afa.Utils.API.Services;
 
-public interface IPlocnPhoneNumberLookupService
+public interface IChinaCellphoneNumberLookupService
 {
-    public Task<PlocnResponse> GetPhoneNumberInfoAsync(string number);
+    public Task<PhoneNumberInfo> GetPhoneNumberInfoAsync(string number);
 }
