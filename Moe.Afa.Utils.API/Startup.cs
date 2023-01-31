@@ -1,4 +1,5 @@
-﻿using Moe.Afa.Utils.API.Services;
+﻿using Azure.Data.Tables;
+using Moe.Afa.Utils.API.Services;
 using Moe.Afa.Utils.API.Settings;
 
 namespace Moe.Afa.Utils.API;
@@ -27,8 +28,13 @@ public class Startup
         
         services.AddSingleton<ISteamCacheManager, SteamCacheManager>();
 
+        var tableStorageConnectionString = Configuration.GetConnectionString("TableStorage");
+        var tableServiceClient = new TableServiceClient(tableStorageConnectionString);
+        services.AddSingleton(tableServiceClient);
+
         services.Configure<SteamSettings>(Configuration.GetSection("Steam"));
         services.Configure<CidLookupSettings>(Configuration.GetSection("CidLookup"));
+        services.Configure<PotekoOfficeStatusSettings>(Configuration.GetSection("PotekoOfficeStatusSettings"));
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
