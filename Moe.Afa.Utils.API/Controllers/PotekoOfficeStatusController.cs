@@ -90,18 +90,18 @@ public class PotekoOfficeStatusController : ControllerBase
 
     private bool VerifyPassword(string? oneTimePassword)
     {
-        // base64(SHA-512(concat(password.UTF-8, (Now.EpochSeconds / 15).ToString().UTF-8))
+        // base64(SHA-256(concat(password.UTF-8, (Now.EpochSeconds / 15).ToString().UTF-8))
 
         if (oneTimePassword == null)
         {
             return false;
         }
 
-        using var sha512 = SHA512.Create();
+        using var sha256 = SHA256.Create();
 
         string Compute(long time)
         {
-            return Convert.ToBase64String(sha512.ComputeHash(Encoding.UTF8.GetBytes(time + _password)));
+            return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(time + _password)));
         }
 
         long seconds = DateTimeOffset.UtcNow.ToUnixTimeSeconds() / 15;

@@ -10,7 +10,7 @@ public class PotekoOfficeStateUpdateRequest
     public DateTime Date { get; set; }
     
     /// <summary>
-    /// base64(SHA-512(concat(password.UTF-8, (Now.EpochSeconds / 15).ToString().UTF-8))
+    /// base64(SHA-256(concat(password.UTF-8, (Now.EpochSeconds / 15).ToString().UTF-8))
     /// </summary>
     public string? OneTimePassword { get; set; }
 }
